@@ -1,58 +1,59 @@
 # Axon Companion (Working Name)
 
-**Lokalni memorijski sloj koji personalizuje tvoju ChatGPT interakciju — bez API-ja.**
+**Local memory layer that personalizes your ChatGPT interaction — without API.**
 
-Axon je browser + lokalni daemon sistem koji:
+Axon is a browser + local daemon system that:
 
-- čuva tvoje GPT sesije lokalno,
-- periodično ih sažima kroz automatizovan GPT upit u pozadini (UI-level, ne API),
-- destiluje dugoročni korisnički profil (stil, preferencije, interesne oblasti, blindspot-i),
-- automatski ubacuje personalizovani kontekst u ChatGPT pre svake poruke,
-- omogućava ti uvid i kontrolu nad memorijom (transparencija).
+- stores your GPT sessions locally,
+- periodically summarizes them through an automated GPT query in the background (UI-level, not API),
+- distills a long-term user profile (style, preferences, interest areas, blind spots),
+- automatically injects personalized context into ChatGPT before each message,
+- allows you insight and control over memory (transparency).
 
-Cilj: **AI koji te zaista pamti i radi sa tobom kao kognitivni partner.**  
-Use case: demonstracija tehničke sposobnosti, istraživački alat, lični produktivni layer. Nije komercijalni proizvod (MVP faza).
+Goal: **AI that truly remembers you and works with you as a cognitive partner.**  
+Use case: demonstration of technical capability, research tool, personal productivity layer. Not a commercial product (MVP phase).
 
 ---
 
 ## Status
 
 **Phase: Pre-MVP Design / Implementation.**  
-Zero-API enforced: sve interakcije sa GPT rade kroz web UI (content script automation).
+Zero-API enforced: all GPT interactions work through web UI (content script automation).
 
 ---
 
-## Visoke vrednosti
+## High Values
 
-- Lokalna privatnost: ništa ne napušta tvoj računar.
-- Transparentna memorija: YAML profil koji možeš menjati.
-- Adaptivna injekcija: koncizan, kontekstualno relevantan prompt, bez balasta.
-- Model-agnostično: primarno za ChatGPT, ali arhitektura dozvoljava Claude / lokalne LLM-ove.
+- Local privacy: nothing leaves your computer.
+- Transparent memory: YAML profile that you can edit.
+- Adaptive injection: concise, contextually relevant prompt, without bloat.
+- Model-agnostic: primarily for ChatGPT, but architecture allows Claude / local LLMs.
 
 ---
 
-## Brzi prikaz rada
-Korisnik ↔ ChatGPT UI
+## Quick Work Overview
+
+User ↔ ChatGPT UI
 ↑ (content script intercepter)
-│  snimi input/output
-│  injektuj personalizaciju
-└──▶ Axon Go Daemon (lokalno)
-├─ log sesije
-├─ povremeno traži GPT da sumira istoriju (skriven prompt)
+│  save input/output
+│  inject personalization
+└──▶ Axon Go Daemon (local)
+├─ session log
+├─ periodically asks GPT to summarize history (hidden prompt)
 ├─ update user_profile.yaml
-└─ šalje nazad kompaktan kontekst za naredne poruke
+└─ sends back compact context for next messages
 
 ---
 
 ## Core Features (MVP Scope)
 
-- [ ] Captura ChatGPT poruka (user + assistant).
-- [ ] Lokalni log sesije.
-- [ ] Manualno pokretanje „Summarize session“ (auto kasnije).
-- [ ] GPT summary → strukturisani YAML update (preferencije, teme, stil).
-- [ ] Prompt injekcija iz YAML + trenutni input.
-- [ ] Extension popup: prikaz aktivne memorije + ON/OFF personalizacija.
-- [ ] Export / import profila.
+- [ ] Capture ChatGPT messages (user + assistant).
+- [ ] Local session log.
+- [ ] Manual trigger of “Summarize session” (auto later).
+- [ ] GPT summary → structured YAML update (preferences, topics, style).
+- [ ] Prompt injection from YAML + current input.
+- [ ] Extension popup: display active memory + ON/OFF personalization.
+- [ ] Export / import profile.
 
 ---
 
@@ -61,32 +62,33 @@ Korisnik ↔ ChatGPT UI
 1. `git clone ...`
 2. `cd axon-companion`
 3. `go mod tidy`
-4. `go run ./cmd/axond` (pokreće lokalni WebSocket server)
-5. U Chrome: load unpacked extension iz `web/extension/`
-6. Otvori ChatGPT → napiši nešto → proveri da li se loguje u `storage/sessions/`
-7. Klikni „Summarize & Update“ u popup-u → proveri `storage/profiles/<user>.yaml`
-8. Uključi „Inject Memory“ → šalji naredna pitanja GPT-ju i posmatraj promenu ponašanja.
+4. `go run ./cmd/axond` (runs local WebSocket server)
+5. In Chrome: load unpacked extension from `web/extension/`
+6. Open ChatGPT → write something → check if it logs in `storage/sessions/`
+7. Click “Summarize & Update” in popup → check `storage/profiles/<user>.yaml`
+8. Enable “Inject Memory” → send next questions to GPT and observe behavior change.
 
 ---
 
 ## Repo Layout
+
 cmd/axond/           # Go daemon entry
-internal/memory/     # STM/MTM/LTM, YAML profil
+internal/memory/     # STM/MTM/LTM, YAML profile
 internal/prompt/     # Prompt builder + token budgeting
 internal/server/     # WebSocket / control API
-web/extension/       # Browser ekstenzija (content + popup)
-storage/             # Lokalni podaci (gitignore)
-docs/                # Arhitektura, roadmap, schema
+web/extension/       # Browser extension (content + popup)
+storage/             # Local data (gitignore)
+docs/                # Architecture, roadmap, schema
 
 ---
 
 ## License
 
-TBD (preporuka: Apache-2.0 ili AGPL za defanzivnost).
+TBD (recommendation: Apache-2.0 or AGPL for defensiveness).
 
 ---
 
 ## Credits
 
-Core concept: stratifikovana memorija (SynthaMind).  
-MVP implementacija: @Nenad + AI asistencija.
+Core concept: stratified memory (SynthaMind).  
+MVP implementation: @Nenad + AI assistance.
