@@ -12,6 +12,46 @@
 | Prompt Composer      | Injection Engine                 | Compose personalized prompts dynamically using current input + relevant LTM context.   | JS template engine or custom middleware logic      |
 | User Interface       | Settings Panel + Memory Viewer   | Allow user to view/edit memory, toggle personalization, export/import profile.         | Vue.js or plain JS, TailwindCSS (embedded in extension popup) |
 
+## Initial project structure plan
+
+```text
+axon-companion/
+├── cmd/
+│   └── axond/                   # Go daemon entry point (main.go)
+│
+├── internal/
+│   ├── memory/                  # STM/MTM/LTM logic, YAML handling
+│   ├── prompt/                  # Prompt composer, token budgeting
+│   └── server/                  # WS server, message routing
+│
+├── storage/                     # Local persistent data
+│   ├── sessions/               # Raw conversation logs (.jsonl)
+│   ├── profiles/               # user_profile.yaml etc.
+│   └── tmp/                    # Temporary summarization inputs
+│
+├── web/
+│   └── extension/              # Browser extension
+│       ├── content.ts          # DOM interception, mutation observer
+│       ├── popup.vue           # UI: settings, preview, memory editor
+│       ├── background.ts       # Summarization trigger logic
+│       └── manifest.json       # Manifest v3
+│
+├── docs/                        # Full documentation
+│   ├── DEV_GUIDE.md
+│   ├── ROADMAP.md
+│   ├── PROFILE_SCHEMA.md
+│   ├── CUT_SCOPE.md
+│   ├── PROMPT_SUMMARY.md
+│   ├── CONFIG_OPTIONS.md
+│   └── INJECTION_TEMPLATE.md (optional)
+│
+├── LICENSE.txt                  # Personal Use License (custom)
+├── COMMERCIAL-LICENSE.md       # Info on paid licensing (optional)
+├── README.md                    # Project overview + GIF + instructions
+├── .gitignore                   # storage/, dist/, .env etc.
+└── .env.sample                  # Example config for daemon/ext
+```
+
 ## Requirements
 
 - Go 1.22+
