@@ -1,5 +1,17 @@
 # Dev Guide
 
+## System Module Overview
+
+| Module               | Type                             | Responsibilities                                                                     | Tech Stack                                         |
+|----------------------|----------------------------------|----------------------------------------------------------------------------------------|----------------------------------------------------|
+| ChatGPT Interceptor  | Browser Extension (Content Script) | Intercept user input/output, inject personalization prompt, log messages to local DB. | JavaScript, Chrome Extension (Manifest V3)         |
+| Session Logger       | LocalStorage/IndexedDB Module    | Store recent chat sessions for summarization.                                          | IndexedDB (via Dexie.js or native)                |
+| Summarization Engine | Background Script + GPT Prompt / Local LLM | Periodically summarize sessions, extract structured user traits.              | OpenAI GPT prompt or WebAssembly-based LLM (MiniLM, LLaMA.cpp) |
+| Long-Term Memory Store | JSON Profile + Embedding Vector Store | Hold persistent facts, preferences, habits, tone, domains of interest.         | JSON, SQLite, FAISS or Qdrant (local)             |
+| Memory Manager       | Orchestration Layer              | Merge short-term summaries into long-term schema, resolve conflicts.                   | JS or Python, YAML schema definitions              |
+| Prompt Composer      | Injection Engine                 | Compose personalized prompts dynamically using current input + relevant LTM context.   | JS template engine or custom middleware logic      |
+| User Interface       | Settings Panel + Memory Viewer   | Allow user to view/edit memory, toggle personalization, export/import profile.         | Vue.js or plain JS, TailwindCSS (embedded in extension popup) |
+
 ## Requirements
 
 - Go 1.22+
