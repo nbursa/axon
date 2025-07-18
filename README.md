@@ -33,15 +33,19 @@ Zero-API enforced: all GPT interactions work through web UI (content script auto
 
 ## Quick Work Overview
 
+```text
 User ↔ ChatGPT UI
-↑ (content script intercepter)
-│  save input/output
-│  inject personalization
-└──▶ Axon Go Daemon (local)
-├─ session log
-├─ periodically asks GPT to summarize history (hidden prompt)
-├─ update user_profile.yaml
-└─ sends back compact context for next messages
+       ↑ (content script interceptor)
+       │
+       │  - Save input/output
+       │  - Inject personalization
+       │
+       └──▶ Axon Go Daemon (local)
+            ├─ Logs session data
+            ├─ Periodically asks GPT to summarize history (via hidden prompt)
+            ├─ Updates `user_profile.yaml`
+            └─ Sends back compact context for next messages
+```
 
 ---
 
@@ -72,6 +76,7 @@ User ↔ ChatGPT UI
 
 ## Repo Layout
 
+```text
 cmd/axond/           # Go daemon entry
 internal/memory/     # STM/MTM/LTM, YAML profile
 internal/prompt/     # Prompt builder + token budgeting
@@ -79,16 +84,21 @@ internal/server/     # WebSocket / control API
 web/extension/       # Browser extension (content + popup)
 storage/             # Local data (gitignore)
 docs/                # Architecture, roadmap, schema
+```
 
 ---
 
 ## License
 
-TBD (recommendation: Apache-2.0 or AGPL for defensiveness).
+This project is released under the [**Axon Personal Use License v1.0**](LICENCE)
+It allows free use for learning, research, and local personal use.  
+Commercial use or redistribution is **not permitted**.
+
+For business/commercial licensing, contact: <https://nenadbursac.com/contact>
 
 ---
 
 ## Credits
 
-Core concept: stratified memory (SynthaMind).  
-MVP implementation: @Nenad + AI assistance.
+Core concept: stratified memory [SynthaMind](https://github.com/nbursa/synthamind).  
+MVP implementation: @nbursa.
