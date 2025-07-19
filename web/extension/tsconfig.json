@@ -6,7 +6,9 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["chrome", "firefox-webext-browser"],
+    "lib": ["DOM", "ES2020"],
   },
   "include": ["content.ts"]
 }
