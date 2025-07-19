@@ -1,23 +1,36 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "Axon Companion",
   "version": "0.1.0",
   "description": "Intercepts ChatGPT to enable local memory + personalization.",
-  "permissions": ["scripting", "activeTab", "storage"],
-  "host_permissions": ["https://chat.openai.com/*", "https://chatgpt.com/*"],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webNavigation",
+    "<all_urls>"
+  ],
   "content_scripts": [
     {
-      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*"],
-      "exclude_matches": ["https://accounts.google.com/*", "https://auth0.openai.com/*"],
+      "matches": ["https://chatgpt.com/*"],
+      "exclude_matches": [
+        "https://accounts.google.com/*",
+        "https://auth0.openai.com/*"
+      ],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
   ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "icons": {
     "48": "images/icons/icon48.png",
     "128": "images/icons/icon128.png"
   },
-  "action": {
+  "browser_action": {
     "default_title": "Axon"
   }
 }
