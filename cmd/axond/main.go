@@ -18,6 +18,6 @@ func main() {
 	wsPort := ":7381"
 	http.HandleFunc("/ws", server.HandleWS)
 
-	fmt.Printf("Axon Daemon running on ws://localhost%s/ws\n", wsPort)
-	log.Fatal(http.ListenAndServe(wsPort, nil))
+	fmt.Printf("Axon Daemon running on wss://localhost%s/ws\n", wsPort)
+	log.Fatal(http.ListenAndServeTLS(wsPort, "cert.pem", "key.pem", nil))
 }
