@@ -1,4 +1,6 @@
 .DS_Store
 node_modules
 web/extension/content.js
+web/extension/background.js
 storage/sessions
+*.pem
