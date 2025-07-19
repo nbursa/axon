@@ -1,4 +1,4 @@
-const WS_URL = "ws://localhost:7381/ws";
+const WS_URL = "wss://localhost:7381/ws";
 const sessionId = `sess_${new Date().toISOString().replace(/[:.]/g, "-")}`;
 let socket: WebSocket | null = null;
 
@@ -26,21 +26,55 @@ function sendToDaemon(type: string, text: string) {
 //   });
 // }
 
-function interceptSendButton() {
-  const textarea = document.querySelector("textarea");
+function interceptSend() {
+  const editable = document.querySelector(
+    "div.ProseMirror[contenteditable='true']"
+  );
+
   const sendBtn = document.querySelector('button[data-testid="send-button"]');
 
-  if (!textarea || !sendBtn) {
-    console.warn("[AXON] Could not find textarea or send button.");
+  if (!editable || !sendBtn) {
+    console.warn("[AXON] Could not find input or send button.");
     return;
   }
 
-  sendBtn.addEventListener("click", () => {
-    const text = (textarea as HTMLTextAreaElement).value.trim();
-    if (text.length > 0) {
-      console.log("[AXON] Sending user_msg:", text);
-      sendToDaemon("user_msg", text);
+  editable.addEventListener("keydown", (e) => {
+    const ke = e as KeyboardEvent;
+    if (ke.key === "Enter" && !ke.shiftKey) {
+      setTimeout(() => {
+        if (lastUserText.length > 0) {
+          console.log("[AXON] Enter submit captured:", lastUserText);
+          console.log("[AXON] Sending to daemon:", {
+            type: "user_msg",
+            session_id: sessionId,
+            text: lastUserText,
+          });
+
+          sendToDaemon("user_msg", lastUserText);
+        }
+      }, 10);
     }
+  });
+
+  let lastUserText = "";
+
+  editable.addEventListener("input", () => {
+    lastUserText = editable.textContent?.trim() || "";
+  });
+
+  sendBtn.addEventListener("click", () => {
+    setTimeout(() => {
+      if (lastUserText.length > 0) {
+        console.log("[AXON] Captured user input:", lastUserText);
+        console.log("[AXON] Sending to daemon:", {
+          type: "user_msg",
+          session_id: sessionId,
+          text: lastUserText,
+        });
+
+        sendToDaemon("user_msg", lastUserText);
+      }
+    }, 10); // allow time for React update
   });
 }
 
@@ -71,5 +105,5 @@ function observeAssistant() {
 // INIT
 initWebSocket();
 // setTimeout(interceptInput, 2000); // give DOM time to load
-setTimeout(interceptSendButton, 2000);
+setTimeout(interceptSend, 2000);
 setTimeout(observeAssistant, 3000);
