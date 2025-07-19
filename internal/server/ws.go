@@ -12,9 +12,7 @@ import (
 
 func HandleWS(w http.ResponseWriter, r *http.Request) {
 	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
-		// OriginPatterns: []string{"https://chat.openai.com", "https://chatgpt.com"},
 		OriginPatterns: []string{"*"},
-		// OriginPatterns: []string{"https://*.openai.com", "https://*.chatgpt.com"},
 	})
 	if err != nil {
 		log.Println("WebSocket accept failed:", err)
@@ -30,6 +28,8 @@ func HandleWS(w http.ResponseWriter, r *http.Request) {
 			log.Println("WS read error:", err)
 			break
 		}
+
+		log.Println("Raw envelope received:", envelope)
 
 		switch envelope["type"] {
 		case "user_msg", "assistant_msg":
