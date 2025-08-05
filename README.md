@@ -98,11 +98,6 @@ For business/commercial licensing, contact: <https://nenadbursac.com/contact>
 
 ---
 
-## Credits
-
-Core concept: stratified memory [SynthaMind](https://github.com/nbursa/synthamind).  
-MVP implementation: @nbursa.
-
 ## Related Projects
 
 Axon is part of a broader research direction on structured synthetic memory and interpretable cognitive systems.
