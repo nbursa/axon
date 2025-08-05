@@ -102,3 +102,13 @@ For business/commercial licensing, contact: <https://nenadbursac.com/contact>
 
 Core concept: stratified memory [SynthaMind](https://github.com/nbursa/synthamind).  
 MVP implementation: @nbursa.
+
+## Related Projects
+
+Axon is part of a broader research direction on structured synthetic memory and interpretable cognitive systems.
+
+- [EgoAI](https://github.com/nbursa/EgoAI) – Executive loop for perception, semantic reasoning, and goal processing. Uses structured memory via Sentience + Inception.
+- [Inception-core](https://github.com/nbursa/inception-core) – Cortex-like memory server for STM/LTM storage and semantic memory graph.
+- [Sentience](https://github.com/nbursa/sentience) – DSL for encoding and transforming semantic tokens for memory and reasoning.
+
+While Axon focuses on aligning and extending LLM behavior via memory, EgoAI explores the same concept without LLMs - using structured memory alone as the basis for reasoning and adaptation.
