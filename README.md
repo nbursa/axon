@@ -1,6 +1,6 @@
 # Axon Companion (Working Name)
 
-**Local memory layer that personalizes your ChatGPT interaction — without API.**
+**Local memory layer that personalizes your ChatGPT interaction - without API.**
 
 Axon is a browser + local daemon system that:
 
