@@ -2,5 +2,6 @@
 node_modules
 web/extension/content.js
 web/extension/background.js
+web/extension/node_modules
 storage/sessions
 *.pem

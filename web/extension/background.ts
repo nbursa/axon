@@ -9,13 +9,16 @@ browser.runtime.onStartup.addListener(() => {
 });
 
 browser.runtime.onMessage.addListener(
-  (
-    message: { type: string },
-    _sender,
-    sendResponse: (response: any) => void
-  ) => {
-    if (message.type === "ping") {
-      sendResponse({ type: "pong" });
+  (message, _sender, sendResponse: (response: any) => void) => {
+    if (
+      typeof message === "object" &&
+      message !== null &&
+      "type" in message &&
+      typeof (message as any).type === "string"
+    ) {
+      if ((message as any).type === "ping") {
+        sendResponse({ type: "pong" });
+      }
     }
     return true;
   }

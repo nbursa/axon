@@ -25,7 +25,7 @@ func AppendToSessionLog(sessionID, role, text string) error {
 		Text:      text,
 	}
 
-	filePath := filepath.Join("storage", "sessions", fmt.Sprintf("%s.jsonl", sessionID))
+	filePath := filepath.Join(SessionDir, fmt.Sprintf("%s.jsonl", sessionID))
 	f, err := os.OpenFile(filePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return err
