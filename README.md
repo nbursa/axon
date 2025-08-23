@@ -51,10 +51,10 @@ User ↔ ChatGPT UI
 
 ## Core Features (MVP Scope)
 
-- [ ] Capture ChatGPT messages (user + assistant).
-- [ ] Local session log.
+- [x] Capture ChatGPT messages (user + assistant).
+- [x] Local session log.
 - [ ] Manual trigger of “Summarize session” (auto later).
-- [ ] GPT summary → structured YAML update (preferences, topics, style).
+- [x] GPT summary → structured YAML update (preferences, topics, style).
 - [ ] Prompt injection from YAML + current input.
 - [ ] Extension popup: display active memory + ON/OFF personalization.
 - [ ] Export / import profile.
