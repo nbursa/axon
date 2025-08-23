@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Axon Companion – Privacy Policy</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 0 16px;
+        }
+
+        h1 {
+            margin-top: 0
+        }
+
+        code {
+            background: #f5f5f7;
+            padding: 2px 6px;
+            border-radius: 4px
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Axon Companion – Privacy Policy</h1>
+    <p><em>Last updated: 08-23-2025</em></p>
+
+    <h2>Overview</h2>
+    <p>Axon Companion adds local memory to ChatGPT by recording the text you write and the assistant’s replies on
+        <code>chatgpt.com</code> and storing them <strong>locally on your device</strong>. The extension does not send
+        your data to external servers operated by the developer or third parties.</p>
+
+    <h2>Data We Access</h2>
+    <ul>
+        <li><strong>Website content</strong> on <code>https://chatgpt.com/*</code> (your prompts and assistant
+            responses) — used solely to build a local session log and a local YAML profile for personalization.</li>
+    </ul>
+
+    <h2>How Your Data Is Used</h2>
+    <ul>
+        <li>Data is processed locally by the extension and a local daemon (running on <code>localhost</code> over
+            WebSocket).</li>
+        <li>No analytics, tracking, or advertising code.</li>
+        <li>No data is sold or transferred to third parties.</li>
+    </ul>
+
+    <h2>Storage & Retention</h2>
+    <ul>
+        <li>Session logs and the YAML profile are stored on your machine under the extension’s configured storage folder
+            (e.g., <code>./storage/</code> in the Axon project).</li>
+        <li>You can delete these files at any time to erase your data.</li>
+    </ul>
+
+    <h2>Permissions Rationale</h2>
+    <ul>
+        <li><strong>activeTab / tabs</strong> – to run only on the active ChatGPT tab and inject the content script
+            after you interact.</li>
+        <li><strong>webNavigation / webRequest</strong> – to detect when the ChatGPT page is loaded/changed so capturing
+            works reliably. These events are not used to collect browsing history.</li>
+        <li><strong>storage</strong> – to save local settings (e.g., enable/disable memory injection).</li>
+        <li><strong>Host permission</strong> <code>https://chatgpt.com/*</code> – restricts operation strictly to
+            ChatGPT.</li>
+    </ul>
+
+    <h2>Remote Code</h2>
+    <p>The extension is shipped as a bundled package (no external scripts are loaded at runtime; no <code>eval</code> of
+        remote strings). If you obtained Axon from the Chrome Web Store, all code executing in the extension is included
+        in the published package.</p>
+
+    <h2>User Control</h2>
+    <ul>
+        <li>You may disable the extension at any time from the browser’s extensions page.</li>
+        <li>Local files can be removed manually to clear your history/profile.</li>
+    </ul>
+
+    <h2>Contact</h2>
+    <p>For privacy questions or requests, contact: <a href="mailto:nenad@nenadbursac.com">nenad@nenadbursac.com</a> or visit <a
+            href="https://nenadbursac.com" target="_blank" rel="noopener">nenadbursac.com</a>.</p>
+
+    <h2>Changes</h2>
+    <p>Any changes to this policy will be posted on this page with an updated date.</p>
+</body>
+
+</html>
