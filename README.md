@@ -63,14 +63,28 @@ User ↔ ChatGPT UI
 
 ## Quick Start (dev)
 
-1. `git clone ...`
-2. `cd axon-companion`
-3. `go mod tidy`
-4. `go run ./cmd/axond` (runs local WebSocket server)
-5. In Chrome: load unpacked extension from `web/extension/`
-6. Open ChatGPT → write something → check if it logs in `storage/sessions/`
-7. Click “Summarize & Update” in popup → check `storage/profiles/<user>.yaml`
-8. Enable “Inject Memory” → send next questions to GPT and observe behavior change.
+1. `git clone … && cd axon`
+2. Install and run the local daemon **with TLS** (ChatGPT runs on https, so the extension connects via WSS):
+   - (macOS) `brew install mkcert nss`
+   - `mkcert -install`
+   - `mkcert -key-file key.pem -cert-file cert.pem "localhost" 127.0.0.1 ::1`
+   - `go mod tidy`
+   - `go run ./cmd/axond -tls -cert cert.pem -key key.pem`  
+     (This prints: `Axon Daemon running on wss://localhost:7381/ws`)
+
+3. Build the extension:
+
+   ```bash
+   cd web/extension
+   npm install
+   npm run build
+   cd ../../
+   ```
+
+4. In Chrome: open **chrome://extensions** → enable **Developer mode** → **Load unpacked** → select `web/extension/`.
+
+5. Open ChatGPT (`https://chatgpt.com`) → send a message.  
+   You should see JSONL appended under `storage/sessions/` (e.g. `sess_<timestamp>.jsonl`).
 
 ---
 
@@ -95,6 +109,12 @@ It allows free use for learning, research, and local personal use.
 Commercial use or redistribution is **not permitted**.
 
 For business/commercial licensing, contact: <https://nenadbursac.com/contact>
+
+---
+
+## Privacy Policy
+
+See: [Privacy Policy](https://nbursa.github.io/axon/privacy.html)
 
 ---
 
