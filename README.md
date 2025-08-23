@@ -1,4 +1,4 @@
-# Axon Companion (Working Name)
+# Axon Companion
 
 **Local memory layer that personalizes your ChatGPT interaction - without API.**
 
