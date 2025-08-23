@@ -42,6 +42,26 @@ func HandleWS(w http.ResponseWriter, r *http.Request) {
 			memory.AppendToSessionLog(sessionID, role, text)
 			wsjson.Write(ctx, conn, map[string]string{"type": "ack", "msg": "logged"})
 
+		case "summarized":
+			// Accepting {yaml: "..."} or {text: "..."}.
+			yamlStr, _ := envelope["yaml"].(string)
+			if yamlStr == "" {
+				yamlStr, _ = envelope["text"].(string)
+			}
+			if yamlStr == "" {
+				log.Println("summarized without yaml/text")
+				wsjson.Write(ctx, conn, map[string]string{"type": "error", "err": "missing yaml"})
+				break
+			}
+
+			updated, err := memory.ApplySummaryYAML(yamlStr)
+			if err != nil {
+				log.Println("ApplySummaryYAML error:", err)
+				wsjson.Write(ctx, conn, map[string]string{"type": "error", "err": err.Error()})
+				break
+			}
+			wsjson.Write(ctx, conn, map[string]any{"type": "ack", "msg": "profile_updated", "profile": updated})
+
 		default:
 			log.Println("Unknown message type:", envelope["type"])
 			wsjson.Write(ctx, conn, map[string]string{"type": "error", "err": "unknown type"})
